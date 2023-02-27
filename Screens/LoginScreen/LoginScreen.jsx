@@ -9,13 +9,15 @@ import {
   Platform,
   Keyboard,
   TouchableWithoutFeedback,
+  ImageBackground,
+  Button,
 } from "react-native";
 
 const initialState = {
   email: "",
   password: "",
 };
-export const LoginScreen = () => {
+export const LoginScreen = ({ navigation }) => {
   const [isShowKeyboard, setisShowKeyboard] = useState(false);
   const [state, setState] = useState(initialState);
 
@@ -28,52 +30,67 @@ export const LoginScreen = () => {
   return (
     <TouchableWithoutFeedback onPress={keyboardHide}>
       <View style={styles.container}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        <ImageBackground
+          style={styles.image}
+          source={require("../images/backgroundImg.jpg")}
         >
-          <View
-            style={{
-              ...styles.form,
-              marginBottom: isShowKeyboard ? -180 : null,
-            }}
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
           >
-            <Text style={styles.caption}>Увійти</Text>
-
-            <View style={{ marginTop: 32 }}>
-              <TextInput
-                style={styles.input}
-                placeholder="Email"
-                value={state.email}
-                onChangeText={(value) =>
-                  setState((prevState) => ({ ...prevState, email: value }))
-                }
-                onFocus={() => setisShowKeyboard(true)}
-                onSubmitEditing={keyboardHide}
-              ></TextInput>
-            </View>
-            <View style={{ marginTop: 16 }}>
-              <TextInput
-                style={styles.input}
-                placeholder="Password"
-                value={state.password}
-                onChangeText={(value) =>
-                  setState((prevState) => ({ ...prevState, password: value }))
-                }
-                secureTextEntry={true}
-                onFocus={() => setisShowKeyboard(true)}
-                onSubmitEditing={keyboardHide}
-              ></TextInput>
-            </View>
-            <TouchableOpacity
-              onPress={keyboardHide}
-              activeOpacity={0.5}
-              style={styles.btn}
+            <View
+              style={{
+                ...styles.form,
+                marginBottom: isShowKeyboard ? -180 : null,
+              }}
             >
-              <Text style={styles.textbtn}>Увійти</Text>
-            </TouchableOpacity>
-            <Text style={styles.minitext}>Нема акаунта? Зареєструватися</Text>
-          </View>
-        </KeyboardAvoidingView>
+              <Text style={styles.caption}>Увійти</Text>
+
+              <View style={{ marginTop: 32 }}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Email"
+                  value={state.email}
+                  onChangeText={(value) =>
+                    setState((prevState) => ({ ...prevState, email: value }))
+                  }
+                  onFocus={() => setisShowKeyboard(true)}
+                  onSubmitEditing={keyboardHide}
+                ></TextInput>
+              </View>
+              <View style={{ marginTop: 16 }}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Password"
+                  value={state.password}
+                  onChangeText={(value) =>
+                    setState((prevState) => ({ ...prevState, password: value }))
+                  }
+                  secureTextEntry={true}
+                  onFocus={() => setisShowKeyboard(true)}
+                  onSubmitEditing={keyboardHide}
+                ></TextInput>
+              </View>
+              <TouchableOpacity
+                onPress={keyboardHide}
+                activeOpacity={0.5}
+                style={styles.btn}
+              >
+                <Text style={styles.textbtn}>Увійти</Text>
+              </TouchableOpacity>
+              <View>
+                <Text
+                  onPress={() => {
+                    navigation.navigate("Registration");
+                  }}
+                  title="Нема акаунта? Зареєструватися"
+                  style={styles.minitextbtn}
+                >
+                  Нема акаунта? Зареєструватися
+                </Text>
+              </View>
+            </View>
+          </KeyboardAvoidingView>
+        </ImageBackground>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -81,12 +98,13 @@ export const LoginScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "flex-end",
+    // justifyContent: "flex-end",
     flex: 1,
+    backgroundColor: "#fff",
   },
   form: {
     position: "relative",
-    minHeight: 549,
+    minHeight: 489,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     backgroundColor: "#FFFFFF",
@@ -123,11 +141,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "Roboto-Regular",
   },
-  minitext: {
+  minitextbtn: {
     fontSize: 16,
     fontFamily: "Roboto-Regular",
     color: "#1B4371",
     textAlign: "center",
     marginTop: 16,
+  },
+  image: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "flex-end",
   },
 });

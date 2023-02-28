@@ -1,12 +1,8 @@
 import "react-native-gesture-handler";
 import React, { useEffect } from "react";
-import { useFonts } from "expo-font";
-import { RegistrationScreen } from "./Screens/RegistrationScreen/RegistrationScreen";
-import { LoginScreen } from "./Screens/LoginScreen/LoginScreen";
-import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-
-const Stack = createStackNavigator();
+import { useFonts } from "expo-font";
+import { useRoute } from "./route";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -18,20 +14,6 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Login"
-          component={LoginScreen}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Registration"
-          component={RegistrationScreen}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+  const routing = useRoute(true);
+  return <NavigationContainer>{routing}</NavigationContainer>;
 }

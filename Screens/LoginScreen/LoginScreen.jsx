@@ -40,7 +40,7 @@ export const LoginScreen = ({ navigation }) => {
             <View
               style={{
                 ...styles.form,
-                marginBottom: isShowKeyboard ? -180 : null,
+                marginBottom: isShowKeyboard ? -150 : null,
               }}
             >
               <Text style={styles.caption}>Увійти</Text>

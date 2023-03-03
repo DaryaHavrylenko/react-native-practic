@@ -10,7 +10,6 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   ImageBackground,
-  Button,
 } from "react-native";
 
 const initialState = {
@@ -90,18 +89,16 @@ export const RegistrationScreen = ({ navigation }) => {
                 ></TextInput>
               </View>
               <TouchableOpacity
-                onPress={keyboardHide}
+                onPress={
+                  (keyboardHide,
+                  () => {
+                    navigation.navigate("Home");
+                  })
+                }
                 activeOpacity={0.5}
                 style={styles.btn}
               >
-                <Text
-                  //   onPress={() => {
-                  //     navigation.navigate("Home");
-                  //   }}
-                  style={styles.textbtn}
-                >
-                  Зареєструватися
-                </Text>
+                <Text style={styles.textbtn}>Зареєструватися</Text>
               </TouchableOpacity>
               <View>
                 <Text

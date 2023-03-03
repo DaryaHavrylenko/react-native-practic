@@ -67,11 +67,21 @@ export const LoginScreen = ({ navigation }) => {
                   }
                   secureTextEntry={true}
                   onFocus={() => setisShowKeyboard(true)}
-                  onSubmitEditing={keyboardHide}
+                  onSubmitEditing={
+                    (keyboardHide,
+                    () => {
+                      navigation.navigate("Home");
+                    })
+                  }
                 ></TextInput>
               </View>
               <TouchableOpacity
-                onPress={keyboardHide}
+                onPress={
+                  (keyboardHide,
+                  () => {
+                    navigation.navigate("Home");
+                  })
+                }
                 activeOpacity={0.5}
                 style={styles.btn}
               >

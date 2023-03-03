@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import React, { useEffect } from "react";
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { useRoute } from "./route";
@@ -14,6 +14,6 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
-  const routing = useRoute(true);
+  const routing = useRoute(false);
   return <NavigationContainer>{routing}</NavigationContainer>;
 }

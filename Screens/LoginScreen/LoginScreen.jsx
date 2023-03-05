@@ -10,7 +10,6 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   ImageBackground,
-  Button,
 } from "react-native";
 
 const initialState = {

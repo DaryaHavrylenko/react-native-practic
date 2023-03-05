@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   StyleSheet,
   View,
@@ -8,10 +9,14 @@ import {
   KeyboardAvoidingView,
   Platform,
   Keyboard,
+  StatusBar,
 } from "react-native";
+
 import { MaterialIcons } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+
+const Tab = createBottomTabNavigator();
 
 initialState = {
   postName: "",
@@ -60,7 +65,7 @@ const CreatePostsScreen = () => {
                 paddingLeft: 24,
                 fontSize: 18,
                 fontFamily: "Roboto-Regular",
-                marginBottom: 32,
+                margi: "#E8E8E8",
               }}
               placeholder="Місцевість"
               value={state.password}
@@ -83,12 +88,7 @@ const CreatePostsScreen = () => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={
-              (keyboardHide,
-              () => {
-                navigation.navigate("Home");
-              })
-            }
+            onPress={keyboardHide}
             activeOpacity={0.5}
             style={styles.btn}
           >
@@ -97,7 +97,7 @@ const CreatePostsScreen = () => {
           <TouchableOpacity style={styles.deletePost}>
             <MaterialCommunityIcons
               name="delete-circle"
-              size={60}
+              size={50}
               color="#BDBDBD"
             />
           </TouchableOpacity>
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     paddingRight: 257,
   },
   btn: {
-    backgroundColor: "#FF6C00",
+    backgroundColor: "#F6F6F6",
     height: 51,
     borderRadius: 100,
     marginTop: 43,
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
   },
   textbtn: {
-    color: "#FFFFFF",
+    color: "#BDBDBD",
     fontSize: 16,
     fontFamily: "Roboto-Regular",
   },
@@ -159,6 +159,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#BDBDBD",
+
     marginBottom: 32,
     marginLeft: 16,
     fontFamily: "Roboto-Regular",
@@ -173,6 +174,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 600,
     left: 190,
+    marginTop: 120,
   },
 });
 

@@ -37,6 +37,7 @@ const Home = () => {
       />
       <Tab.Screen
         options={{
+          tabBarStyle: { display: "none" },
           tabBarIcon: (focused, color, size) => (
             <Ionicons name="add-circle" size={40} color="#FF6C00" />
           ),

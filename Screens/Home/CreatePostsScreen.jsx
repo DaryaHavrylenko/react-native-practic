@@ -15,6 +15,7 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+// import { AntDesign } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 
@@ -23,9 +24,10 @@ initialState = {
   regionName: "",
 };
 
-const CreatePostsScreen = () => {
+const CreatePostsScreen = ({ navigation }) => {
   const [isShowKeyboard, setisShowKeyboard] = useState(false);
   const [state, setState] = useState(initialState);
+
   const keyboardHide = () => {
     setisShowKeyboard(false);
     Keyboard.dismiss();
@@ -52,9 +54,9 @@ const CreatePostsScreen = () => {
           <TextInput
             style={styles.input}
             placeholder="Назва..."
-            value={state.email}
+            value={state.postName}
             onChangeText={(value) =>
-              setState((prevState) => ({ ...prevState, email: value }))
+              setState((prevState) => ({ ...prevState, postName: value }))
             }
             onFocus={() => setisShowKeyboard(true)}
             onSubmitEditing={keyboardHide}
@@ -68,9 +70,9 @@ const CreatePostsScreen = () => {
                 margi: "#E8E8E8",
               }}
               placeholder="Місцевість"
-              value={state.password}
+              value={state.regionName}
               onChangeText={(value) =>
-                setState((prevState) => ({ ...prevState, password: value }))
+                setState((prevState) => ({ ...prevState, regionName: value }))
               }
               secureTextEntry={true}
               onFocus={() => setisShowKeyboard(true)}

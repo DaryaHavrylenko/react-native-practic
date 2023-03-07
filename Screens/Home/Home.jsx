@@ -1,13 +1,14 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import PostsScreen from "./PostsScreen";
 import CreatePostsScreen from "./CreatePostsScreen";
-import ProfileScreen from "./ProfileScreen";
-import { AntDesign } from "@expo/vector-icons";
+import { ProfileScreen } from "./ProfileScreen";
+// import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 
@@ -41,12 +42,21 @@ const Home = () => {
           tabBarIcon: (focused, color, size) => (
             <Ionicons name="add-circle" size={40} color="#FF6C00" />
           ),
+          headerLeft: (focused, color, size) => (
+            <AntDesign
+              name="arrowleft"
+              size={24}
+              color="#212121"
+              style={{ marginLeft: 16 }}
+            />
+          ),
         }}
         name="CreatePostsScreen"
         component={CreatePostsScreen}
       />
       <Tab.Screen
         options={{
+          headerShown: false,
           tabBarIcon: (focused, color, size) => (
             <Feather name="user" size={24} color="#212121" />
           ),

@@ -47,7 +47,7 @@ export const useRoute = (isAuth) => {
   return (
     <>
       <Home />
-      <CreatePostsScreen></CreatePostsScreen>
+      {/* <CreatePostsScreen></CreatePostsScreen> */}
     </>
   );
 };

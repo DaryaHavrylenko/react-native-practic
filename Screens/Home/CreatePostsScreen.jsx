@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Camera } from "expo-camera";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   StyleSheet,
@@ -9,13 +10,13 @@ import {
   KeyboardAvoidingView,
   Platform,
   Keyboard,
-  StatusBar,
+  Image,
 } from "react-native";
+import * as Location from "expo-location";
 
 import { MaterialIcons } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-// import { AntDesign } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 
@@ -27,6 +28,33 @@ initialState = {
 const CreatePostsScreen = ({ navigation }) => {
   const [isShowKeyboard, setisShowKeyboard] = useState(false);
   const [state, setState] = useState(initialState);
+  const [camera, setCamera] = useState(null);
+  const [photo, setPhoto] = useState(null);
+
+  const takePhoto = async () => {
+    let photo = await camera.takePictureAsync();
+    let location = await Location.getCurrentPositionAsync();
+
+    console.log(location.coords.latitude);
+    console.log(location.coords.longitude);
+    setPhoto(photo.uri);
+    //   console.log(photo);
+  };
+
+  const sendPhoto = () => {
+    console.log(navigation);
+    navigation.navigate("PostsScreen", { photo });
+  };
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+    })();
+  }, []);
 
   const keyboardHide = () => {
     setisShowKeyboard(false);
@@ -45,12 +73,23 @@ const CreatePostsScreen = ({ navigation }) => {
             marginBottom: isShowKeyboard ? -150 : null,
           }}
         >
-          <View style={styles.userImage}>
-            <TouchableOpacity style={styles.ellips}>
+          <Camera style={styles.camera} ref={setCamera}>
+            {photo && (
+              <View style={styles.takePhotoContainer}>
+                <Image
+                  source={{ uri: photo }}
+                  style={{ height: 120, width: 120 }}
+                ></Image>
+              </View>
+            )}
+            <TouchableOpacity style={styles.ellips} onPress={takePhoto}>
               <MaterialIcons name="photo-camera" size={60} color="#BDBDBD" />
             </TouchableOpacity>
-          </View>
-          <Text style={styles.text}>Завантажте фото</Text>
+          </Camera>
+
+          <TouchableOpacity onPress={() => {}}>
+            <Text style={styles.downloadText}>Завантажте фото</Text>
+          </TouchableOpacity>
           <TextInput
             style={styles.input}
             placeholder="Назва..."
@@ -76,21 +115,14 @@ const CreatePostsScreen = ({ navigation }) => {
               }
               secureTextEntry={true}
               onFocus={() => setisShowKeyboard(true)}
-              onSubmitEditing={
-                (keyboardHide,
-                () => {
-                  navigation.navigate("Home");
-                })
-              }
+              onSubmitEditing={keyboardHide}
             ></TextInput>
           </View>
-
           <TouchableOpacity style={styles.locationIcon}>
             <Octicons name="location" size={24} color="#E8E8E8" />
           </TouchableOpacity>
-
           <TouchableOpacity
-            onPress={keyboardHide}
+            onPress={(keyboardHide, sendPhoto)}
             activeOpacity={0.5}
             style={styles.btn}
           >
@@ -143,9 +175,19 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "Roboto-Regular",
   },
-  userImage: {
+  takePhotoContainer: {
+    position: "absolute",
+    top: 50,
+    left: 20,
+    borderColor: "#FFFFF",
+    borderWidth: 3,
+    height: 100,
+    width: 100,
+  },
+  camera: {
     position: "relative",
-    minWidth: 343,
+    alignItems: "center",
+    // width: 343,
     height: 240,
     borderRadius: 8,
     backgroundColor: "#F6F6F6",
@@ -159,9 +201,8 @@ const styles = StyleSheet.create({
     top: 100,
     left: 170,
   },
-  text: {
+  downloadText: {
     color: "#BDBDBD",
-
     marginBottom: 32,
     marginLeft: 16,
     fontFamily: "Roboto-Regular",

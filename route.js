@@ -1,21 +1,12 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-// import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-// const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 import { RegistrationScreen } from "./Screens/RegistrationScreen/RegistrationScreen";
 import { LoginScreen } from "./Screens/LoginScreen/LoginScreen";
 import Home from "./Screens/Home/Home";
 import CreatePostsScreen from "./Screens/Home/CreatePostsScreen";
-// import PostsScreen from "./Screens/Home/PostsScreen";
-// import CreatePostsScreen from "./Screens/Home/CreatePostsScreen";
-// import ProfileScreen from "./Screens/Home/ProfileScreen";
-// import { AntDesign } from "@expo/vector-icons";
-// import { Ionicons } from "@expo/vector-icons";
-// import { Feather } from "@expo/vector-icons";
-// import { MaterialIcons } from "@expo/vector-icons";
 
 export const useRoute = (isAuth) => {
   if (!isAuth) {
@@ -47,7 +38,6 @@ export const useRoute = (isAuth) => {
   return (
     <>
       <Home />
-      {/* <CreatePostsScreen></CreatePostsScreen> */}
     </>
   );
 };

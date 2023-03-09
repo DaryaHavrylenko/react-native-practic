@@ -1,8 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-import { View, Text, StyleSheet, ImageBackground } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ImageBackground,
+  FlatList,
+  Image,
+  TouchableOpacity,
+} from "react-native";
+import { Octicons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 
-const PostsScreen = () => {
+const PostsScreen = ({ route, navigation }) => {
+  const [posts, setPosts] = useState([]);
+  useEffect(() => {
+    if (route.params) {
+      setPosts((prevState) => [...prevState, route.params]);
+    }
+  }, [route.params]);
+  //   console.log(posts);
+  //   console.log(route.params);
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -13,6 +31,40 @@ const PostsScreen = () => {
         <Text style={styles.userName}>Natali Romanova</Text>
         <Text style={styles.userEmail}>email@example.com</Text>
       </View>
+      <FlatList
+        data={posts}
+        keyExtractor={(item, indx) => {
+          indx.id;
+        }}
+        renderItem={({ item }) => (
+          <View
+            style={{
+              marginTop: 32,
+              marginBottom: 8,
+              marginLeft: 16,
+              marginRight: 16,
+            }}
+          >
+            <Image source={{ uri: item.photo }} style={styles.postsImg} />
+          </View>
+        )}
+      ></FlatList>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("MapScreen");
+        }}
+        style={styles.locationIcon}
+      >
+        <Octicons name="location" size={24} color="#E8E8E8" />
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("CommentsScreen");
+        }}
+        style={styles.commentsIcon}
+      >
+        <FontAwesome5 name="comment" size={24} color="#E8E8E8" />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -48,6 +100,21 @@ const styles = StyleSheet.create({
     color: "#212121CC",
     fontFamily: "Roboto-Regular",
     fontSize: 11,
+  },
+  postsImg: {
+    height: 240,
+    alignItems: "center",
+    borderRadius: 8,
+  },
+  locationIcon: {
+    position: "absolute",
+    top: 395,
+    left: 10,
+  },
+  commentsIcon: {
+    position: "absolute",
+    top: 395,
+    right: 50,
   },
 });
 

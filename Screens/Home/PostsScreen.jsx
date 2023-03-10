@@ -55,7 +55,7 @@ const PostsScreen = ({ route, navigation }) => {
         }}
         style={styles.locationIcon}
       >
-        <Octicons name="location" size={24} color="#E8E8E8" />
+        <Octicons name="location" size={24} color="#9d1f1f" />
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
@@ -63,7 +63,7 @@ const PostsScreen = ({ route, navigation }) => {
         }}
         style={styles.commentsIcon}
       >
-        <FontAwesome5 name="comment" size={24} color="#E8E8E8" />
+        <FontAwesome5 name="comment" size={24} color="#a21616" />
       </TouchableOpacity>
     </View>
   );
@@ -108,13 +108,13 @@ const styles = StyleSheet.create({
   },
   locationIcon: {
     position: "absolute",
-    top: 395,
-    left: 10,
+    top: 350,
+    left: 20,
   },
   commentsIcon: {
     position: "absolute",
-    top: 395,
-    right: 50,
+    top: 350,
+    left: 50,
   },
 });
 

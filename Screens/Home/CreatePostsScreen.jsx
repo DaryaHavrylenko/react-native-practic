@@ -6,6 +6,7 @@ import {
   View,
   TextInput,
   Text,
+  TouchableHighlight,
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
@@ -13,6 +14,7 @@ import {
   Image,
 } from "react-native";
 import * as Location from "expo-location";
+import * as MediaLibrary from "expo-media-library";
 
 import { MaterialIcons } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
@@ -35,20 +37,22 @@ const CreatePostsScreen = ({ navigation }) => {
     let photo = await camera.takePictureAsync();
     let location = await Location.getCurrentPositionAsync();
 
+    // console.log(location);
     console.log(location.coords.latitude);
     console.log(location.coords.longitude);
     setPhoto(photo.uri);
-    //   console.log(photo);
+    // console.log(photo);
   };
 
   const sendPhoto = () => {
-    console.log(navigation);
+    // console.log(navigation);
     navigation.navigate("PostsScreen", { photo });
   };
 
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
+      await MediaLibrary.requestPermissionsAsync();
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
         return;
@@ -86,7 +90,6 @@ const CreatePostsScreen = ({ navigation }) => {
               <MaterialIcons name="photo-camera" size={60} color="#BDBDBD" />
             </TouchableOpacity>
           </Camera>
-
           <TouchableOpacity onPress={() => {}}>
             <Text style={styles.downloadText}>Завантажте фото</Text>
           </TouchableOpacity>
@@ -113,21 +116,26 @@ const CreatePostsScreen = ({ navigation }) => {
               onChangeText={(value) =>
                 setState((prevState) => ({ ...prevState, regionName: value }))
               }
-              secureTextEntry={true}
               onFocus={() => setisShowKeyboard(true)}
               onSubmitEditing={keyboardHide}
             ></TextInput>
           </View>
-          <TouchableOpacity style={styles.locationIcon}>
+          <TouchableOpacity
+            style={styles.locationIcon}
+            onPress={() => {
+              navigation.navigate("MapScreen");
+            }}
+          >
             <Octicons name="location" size={24} color="#E8E8E8" />
           </TouchableOpacity>
-          <TouchableOpacity
+          <TouchableHighlight
             onPress={(keyboardHide, sendPhoto)}
-            activeOpacity={0.5}
+            // activeOpacity={0.5}
+            underlayColor={"#FF6C00"}
             style={styles.btn}
           >
             <Text style={styles.textbtn}>Опубліковати</Text>
-          </TouchableOpacity>
+          </TouchableHighlight>
           <TouchableOpacity style={styles.deletePost}>
             <MaterialCommunityIcons
               name="delete-circle"

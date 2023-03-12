@@ -11,6 +11,8 @@ import {
   TouchableWithoutFeedback,
   ImageBackground,
 } from "react-native";
+import { useDispatch } from "react-redux";
+import { authRegistrationUser } from "../../redux/auth/authOperation";
 
 const initialState = {
   login: "",
@@ -22,15 +24,18 @@ export const RegistrationScreen = ({ navigation }) => {
   const [isShowKeyboard, setisShowKeyboard] = useState(false);
   const [state, setState] = useState(initialState);
 
-  const keyboardHide = () => {
+  const dispatch = useDispatch();
+
+  const handleSubmit = () => {
     setisShowKeyboard(false);
     Keyboard.dismiss();
     // console.log(state);
+    dispatch(authRegistrationUser(state));
     setState(initialState);
   };
 
   return (
-    <TouchableWithoutFeedback onPress={keyboardHide}>
+    <TouchableWithoutFeedback onPress={handleSubmit}>
       <View style={styles.container}>
         <ImageBackground
           style={styles.image}
@@ -60,7 +65,7 @@ export const RegistrationScreen = ({ navigation }) => {
                     setState((prevState) => ({ ...prevState, login: value }))
                   }
                   onFocus={() => setisShowKeyboard(true)}
-                  onSubmitEditing={keyboardHide}
+                  onSubmitEditing={handleSubmit}
                 ></TextInput>
               </View>
               <View style={{ marginTop: 16 }}>
@@ -72,7 +77,7 @@ export const RegistrationScreen = ({ navigation }) => {
                     setState((prevState) => ({ ...prevState, email: value }))
                   }
                   onFocus={() => setisShowKeyboard(true)}
-                  onSubmitEditing={keyboardHide}
+                  onSubmitEditing={handleSubmit}
                 ></TextInput>
               </View>
               <View style={{ marginTop: 16 }}>
@@ -85,12 +90,12 @@ export const RegistrationScreen = ({ navigation }) => {
                   }
                   secureTextEntry={true}
                   onFocus={() => setisShowKeyboard(true)}
-                  onSubmitEditing={keyboardHide}
+                  onSubmitEditing={handleSubmit}
                 ></TextInput>
               </View>
               <TouchableOpacity
                 onPress={
-                  (keyboardHide,
+                  (handleSubmit,
                   () => {
                     navigation.navigate("Home");
                   })

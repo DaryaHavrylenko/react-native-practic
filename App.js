@@ -1,8 +1,10 @@
 import "react-native-gesture-handler";
 import React from "react";
+import { Provider } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { useRoute } from "./route";
+import { store } from "./redux/store";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -15,5 +17,9 @@ export default function App() {
     return null;
   }
   const routing = useRoute(false);
-  return <NavigationContainer>{routing}</NavigationContainer>;
+  return (
+    <Provider store={store}>
+      <NavigationContainer>{routing}</NavigationContainer>
+    </Provider>
+  );
 }

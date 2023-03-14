@@ -5,11 +5,12 @@ const firebaseConfig = {
   apiKey: "AIzaSyDBk7tSEX9Qqm_K-Hyz2bPJ-BekQ6gy0pI",
   authDomain: "react-native-social-networks.firebaseapp.com",
   projectId: "react-native-social-networks",
-  databaseURL: "https://europe-west3.firebaseio.com",
   storageBucket: "react-native-social-networks.appspot.com",
-  appId: "795015384654",
+  messagingSenderId: "795015384654",
+  appId: "1:795015384654:web:0ee2ada80b1ca168f5bd1f",
+  measurementId: "G-6D1B7ZXDC5",
 };
 
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 export { auth };

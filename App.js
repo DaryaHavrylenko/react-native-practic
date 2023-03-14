@@ -5,6 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { useRoute } from "./route";
 import { store } from "./redux/store";
+// import { app } from "../../firebase/config.js";
 
 export default function App() {
   const [fontsLoaded] = useFonts({

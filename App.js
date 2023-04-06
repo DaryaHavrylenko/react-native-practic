@@ -5,7 +5,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { useRoute } from "./route";
 import { store } from "./redux/store";
-// import { app } from "../../firebase/config.js";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -14,6 +13,7 @@ export default function App() {
     "Roboto-Bold": require("./assets/fonts/Roboto-Bold.ttf"),
     "Inter-Medium": require("./assets/fonts/Inter-Medium.ttf"),
   });
+
   if (!fontsLoaded) {
     return null;
   }

@@ -11,6 +11,8 @@ import {
   TouchableWithoutFeedback,
   ImageBackground,
 } from "react-native";
+import { useDispatch } from "react-redux";
+import { authLogInUser } from "../../redux/auth/authOperation";
 
 const initialState = {
   email: "",
@@ -20,14 +22,17 @@ export const LoginScreen = ({ navigation }) => {
   const [isShowKeyboard, setisShowKeyboard] = useState(false);
   const [state, setState] = useState(initialState);
 
-  const keyboardHide = () => {
+  const dispatch = useDispatch();
+
+  const handleSubmit = () => {
     setisShowKeyboard(false);
     Keyboard.dismiss();
-    // console.log(state);
+    dispatch(authLogInUser(state));
+    // console.log("submit", state);
     setState(initialState);
   };
   return (
-    <TouchableWithoutFeedback onPress={keyboardHide}>
+    <TouchableWithoutFeedback onPress={handleSubmit}>
       <View style={styles.container}>
         <ImageBackground
           style={styles.image}
@@ -53,7 +58,7 @@ export const LoginScreen = ({ navigation }) => {
                     setState((prevState) => ({ ...prevState, email: value }))
                   }
                   onFocus={() => setisShowKeyboard(true)}
-                  onSubmitEditing={keyboardHide}
+                  onSubmitEditing={handleSubmit}
                 ></TextInput>
               </View>
               <View style={{ marginTop: 16 }}>
@@ -67,7 +72,7 @@ export const LoginScreen = ({ navigation }) => {
                   secureTextEntry={true}
                   onFocus={() => setisShowKeyboard(true)}
                   onSubmitEditing={
-                    (keyboardHide,
+                    (handleSubmit,
                     () => {
                       navigation.navigate("Home");
                     })
@@ -76,10 +81,10 @@ export const LoginScreen = ({ navigation }) => {
               </View>
               <TouchableOpacity
                 onPress={
-                  (keyboardHide,
-                  () => {
-                    navigation.navigate("Home");
-                  })
+                  handleSubmit
+                  //   () => {
+                  //     navigation.navigate("Home");
+                  //   }
                 }
                 activeOpacity={0.5}
                 style={styles.btn}
